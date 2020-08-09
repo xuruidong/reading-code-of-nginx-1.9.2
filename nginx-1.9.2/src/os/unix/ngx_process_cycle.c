@@ -586,7 +586,8 @@ ngx_noaccept，决定执行不同的分支流程，并循环执行（注意，每次一个循环执行完毕后进
 }
 
 /*
-如果hginx.conf中配置为单进程工作模式，这时将会调用ngx_single_process_cycle方法进入单迸程工作模式。
+如果hginx.conf中配置为单进程工作模式，这时将会调用
+ngx_single_process_cycle 方法进入单迸程工作模式。
 */
 void
 ngx_single_process_cycle(ngx_cycle_t *cycle)

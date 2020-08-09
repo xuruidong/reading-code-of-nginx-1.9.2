@@ -30,11 +30,13 @@ static ngx_conf_enum_t  ngx_debug_points[] = {
     { ngx_string("abort"), NGX_DEBUG_POINTS_ABORT },
     { ngx_null_string, 0 }
 };
-//相关配置见ngx_event_core_commands ngx_http_core_commands ngx_stream_commands ngx_http_core_commands ngx_core_commands  ngx_mail_commands
+//相关配置见ngx_event_core_commands ngx_http_core_commands ngx_stream_commands 
+// ngx_http_core_commands ngx_core_commands  ngx_mail_commands
 
 //对应的存放参数的值的结构体为ngx_core_conf_t
 static ngx_command_t  ngx_core_commands[] = {
-    //daemon on|off 是否已守护进程方式运行，守护进程是脱离终端在后台运行的进程，脱离终端是避免进程执行过程中的打印在任何终端上面显示
+    //daemon on|off 是否已守护进程方式运行，守护进程是脱离终端在后台运行的进程，
+    //脱离终端是避免进程执行过程中的打印在任何终端上面显示
     { ngx_string("daemon"),
       NGX_MAIN_CONF|NGX_DIRECT_CONF|NGX_CONF_FLAG,
       ngx_conf_set_flag_slot,
@@ -42,7 +44,8 @@ static ngx_command_t  ngx_core_commands[] = {
       offsetof(ngx_core_conf_t, daemon),
       NULL },
 
-    //是否以master/slave方式运行  master_process on | off,如果以master/slave方式运行将以slave来接收连接，否则以master接收连接
+    //是否以master/slave方式运行  master_process on | off,
+    //如果以master/slave方式运行将以slave来接收连接，否则以master接收连接
     { ngx_string("master_process"),
       NGX_MAIN_CONF|NGX_DIRECT_CONF|NGX_CONF_FLAG,
       ngx_conf_set_flag_slot,
@@ -52,9 +55,12 @@ static ngx_command_t  ngx_core_commands[] = {
 
     //timer_resolution t表示至少t秒后才调用一次gettimeofday
     /*
-     如果nginx.conf配置文件中设置了timer_resolution酡置项，即表明需要控制时间精度，这时会调用setitimer方法，设置时间间隔
-     为timer_resolution毫秒来回调ngx_timer_signal_handler方法
-     */ //timer_resolution这个参数加上可以保证定时器每个这么多秒中断一次，从而可以从epoll中返回，并跟新时间，判断哪些事件有超时，执行超时事件，例如客户端继上次
+     如果nginx.conf配置文件中设置了timer_resolution酡置项，即表明需要控制时间精度，
+     这时会调用setitimer方法，设置时间间隔     为timer_resolution毫秒来回调
+     ngx_timer_signal_handler方法
+     */ 
+     //timer_resolution这个参数加上可以保证定时器每个这么多秒中断一次，从而可以从
+     //epoll中返回，并更新时间，判断哪些事件有超时，执行超时事件，例如客户端继上次
      //发请求过来，隔了client_header_timeout时间后还没有新请求过来，这会关闭连接
     { ngx_string("timer_resolution"), //单位是s
       NGX_MAIN_CONF|NGX_DIRECT_CONF|NGX_CONF_TAKE1,
@@ -70,7 +76,8 @@ static ngx_command_t  ngx_core_commands[] = {
       0,
       offsetof(ngx_core_conf_t, pid),
       NULL },
-    //lock_file logs/nginx.lock，如果不打开lock_file，则该nginx.lock文件不生效，没作用，如果打开，则开操作系统是否支持原子锁，如果不支持则用文件锁实现
+    //lock_file logs/nginx.lock，如果不打开lock_file，则该nginx.lock文件不生效，没
+    //作用，如果打开，则看操作系统是否支持原子锁，如果不支持则用文件锁实现
     //一般linux是支持原子锁的，所以该文件没有意义
     /*
       见ngx_trylock_fd
@@ -302,9 +309,12 @@ main(int argc, char *const *argv)
     ngx_pid = ngx_getpid();
 
     /*
-    主进程启动的时候，此时还没有读取配置文件，即没有指定日志打印在哪里。nginx这时候虽然可以将一些出错内容或者结果输到标准输出，但是如果要记录一些系统初始化情况，
-socket监听状况，还是需要写到日志文件中去的。在nginx的main函数中，首先会调用ngx_log_init 函数，默认日志文件为：安装路径/logs/error.log，如果这个文件没有权限访问的话，
-会直接报错退出。在mian函数结尾处，在ngx_master_process_cycle函数调用之前，会close掉这个日志文件。
+    主进程启动的时候，此时还没有读取配置文件，即没有指定日志打印在哪里。nginx
+    这时候虽然可以将一些出错内容或者结果输到标准输出，但是如果要记录一些系统初
+    始化情况，socket监听状况，还是需要写到日志文件中去的。在nginx的main函数中，
+    首先会调用ngx_log_init 函数，默认日志文件为：安装路径/logs/error.log，如果
+    这个文件没有权限访问的话，会直接报错退出。在mian函数结尾处，在
+    ngx_master_process_cycle函数调用之前，会close掉这个日志文件。
      */
     log = ngx_log_init(ngx_prefix);
     if (log == NULL) {
@@ -406,7 +416,8 @@ socket监听状况，还是需要写到日志文件中去的。在nginx的main函数中，首先会调用ngx_l
 
     ccf = (ngx_core_conf_t *) ngx_get_conf(cycle->conf_ctx, ngx_core_module);
 
-    if (ccf->master && ngx_process == NGX_PROCESS_SINGLE) { //在这里会把进程模式设置为MASTER模式
+    if (ccf->master && ngx_process == NGX_PROCESS_SINGLE) { 
+		//在这里会把进程模式设置为MASTER模式
         ngx_process = NGX_PROCESS_MASTER;
     }
 
@@ -416,6 +427,7 @@ socket监听状况，还是需要写到日志文件中去的。在nginx的main函数中，首先会调用ngx_l
         return 1;
     }
 
+	// daemon off;
     if (!ngx_inherited && ccf->daemon) {
         if (ngx_daemon(cycle->log) != NGX_OK) {
             return 1;
@@ -449,9 +461,11 @@ socket监听状况，还是需要写到日志文件中去的。在nginx的main函数中，首先会调用ngx_l
     ngx_use_stderr = 0;
 
     /*
-    如果hginx.conf中配置为单进程工作模式，这时将会调用ngx_single_process_cycle方法进入单迸程工作模式。
+    如果hginx.conf中配置为单进程工作模式，这时将会调用
+    ngx_single_process_cycle方法进入单迸程工作模式。
     */
-    if (ngx_process == NGX_PROCESS_SINGLE) { //如果配置的是单进程工作模式，好像不会走到这里
+    if (ngx_process == NGX_PROCESS_SINGLE) { 
+		// master_process off;
         ngx_single_process_cycle(cycle);
         
     } else { //一般都是走到这里，master方式
@@ -476,8 +490,9 @@ master进程会通过execve系统调用来启动新版本的master进程（先fork出子进程再调用exec
 信息的，新版本的master进程通过ngx_add_inherited_sockets方法由环境变量里读取平滑升级信息，并对旧版本Nginx服务监听的句柄做继承处理。
 */
 static ngx_int_t
-ngx_add_inherited_sockets(ngx_cycle_t *cycle)  //ngx_add_inherited_sockets和ngx_exec_new_binary对应
+ngx_add_inherited_sockets(ngx_cycle_t *cycle)
 {
+	//ngx_add_inherited_sockets和ngx_exec_new_binary对应
     u_char           *p, *v, *inherited;
     ngx_int_t         s;
     ngx_listening_t  *ls;

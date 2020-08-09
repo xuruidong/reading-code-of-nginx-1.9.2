@@ -938,15 +938,23 @@ HTTP模块和mail模块的“地位”相似，它们都更关注于应用层面。在事件模块中，ngx_even
 */
 struct ngx_module_s {//相关空间初始化，赋值等可以参考ngx_http_block
     /*
-    对于一类模块（由下面的type成员决定类别）而言，ctx_index表示当前模块在这类模块中的序号。这个成员常常是由管理这类模块的一个
-    Nginx核心模块设置的，对于所有的HTTP模块而言，ctx_index是由核心模块ngx_http_module设置的。ctx_index非常重要，Nginx的模块化
-    设计非常依赖于各个模块的顺序，它们既用于表达优先级，也用于表明每个模块的位置，借以帮助Nginx框架快速获得某个模块的数据（）
+    对于一类模块（由下面的type成员决定类别）而言，ctx_index表示当前模块在
+    这类模块中的序号。这个成员常常是由管理这类模块的一个    Nginx核心模块设置
+    的，对于所有的HTTP模块而言，ctx_index是由核心模块ngx_http_module设置
+    的。
+    ctx_index非常重要，Nginx的模块化    设计非常依赖于各个模块的顺序，它们既
+    用于表达优先级，也用于表明每个模块的位置，借以帮助Nginx框架快速获得某
+    个模块的数据（）
     */
     //ctx index表明了模块在相同类型模块中的顺序
-    ngx_uint_t            ctx_index; //初始化赋值见ngx_http_block, 这个值是按照在http_modules中的位置顺序来排序的，见ngx_http_block
-
+    ngx_uint_t            ctx_index; 
+	/*初始化赋值见ngx_http_block, 这个值是按照在http_modules中的位置顺序
+	来排序的，见ngx_http_block
+	*/
+	
    /*
-    index表示当前模块在ngx_modules数组中的序号。注意，ctx_index表示的是当前模块在一类模块中的序号，而index表示当前模块在所有模块中的序号，
+    index表示当前模块在ngx_modules数组中的序号。注意，ctx_index表示的是当
+    前模块在一类模块中的序号，而index表示当前模块在所有模块中的序号，
     它同样关键。Nginx启动时会根据ngx_modules数组设置各模块的index值。例如：
     ngx_max_module = 0;
     for (i = 0; ngx_modules[i]; i++) {
@@ -967,9 +975,13 @@ struct ngx_module_s {//相关空间初始化，赋值等可以参考ngx_http_block
 
     
     /*
-    ctx用于指向一类模块的上下文结构体，为什么需要ctx呢？因为前面说过，Nginx模块有许多种类，不同类模块之间的功能差别很大。例如，
-    事件类型的模块主要处理I/O事件相关的功能，HTTP类型的模块主要处理HTTP应用层的功能。这样，每个模块都有了自己的特性，而ctx将会
-    指向特定类型模块的公共接口。例如，在HTTP模块中，ctx需要指向ngx_http_module_t结构体,可以参考例如ngx_http_core_module, 
+    ctx用于指向一类模块的上下文结构体，为什么需要ctx呢？因为前面说过，
+    Nginx模块有许多种类，不同类模块之间的功能差别很大。例如，    事件类
+    型的模块主要处理I/O事件相关的功能，HTTP类型的模块主要处理HTTP应用
+    层的功能。这样，每个模块都有了自己的特性，而ctx将会    指向特定类型模
+    块的公共接口。
+    例如，在HTTP模块中，ctx需要指向ngx_http_module_t结构体,可以参考例
+    如ngx_http_core_module, 
     event模块中，指向ngx_event_module_t
     */
     void                 *ctx; //HTTP框架初始化时完成的
