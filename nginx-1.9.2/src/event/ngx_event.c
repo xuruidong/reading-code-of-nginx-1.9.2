@@ -272,12 +272,18 @@ ngx_module_t  ngx_event_core_module = {
 //则会走到ngx_http_read_request_header中的ngx_http_finalize_request(r, NGX_HTTP_BAD_REQUEST);从而关闭连接
 
 /*
-在说nginx前，先来看看什么是“惊群”？简单说来，多线程/多进程（linux下线程进程也没多大区别）等待同一个socket事件，当这个事件发生时，
-这些线程/进程被同时唤醒，就是惊群。可以想见，效率很低下，许多进程被内核重新调度唤醒，同时去响应这一个事件，当然只有一个进程能处理
-事件成功，其他的进程在处理该事件失败后重新休眠（也有其他选择）。这种性能浪费现象就是惊群。
+在说nginx前，先来看看什么是“惊群”？简单说来，多线程/多进程
+（linux下线程进程也没多大区别）等待同一个socket事件，当这
+个事件发生时，这些线程/进程被同时唤醒，就是惊群。可以想见，
+效率很低下，许多进程被内核重新调度唤醒，同时去响应这一个事
+件，当然只有一个进程能处理事件成功，其他的进程在处理该事件
+失败后重新休眠（也有其他选择）。这种性能浪费现象就是惊群。
 
-nginx就是这样，master进程监听端口号（例如80），所有的nginx worker进程开始用epoll_wait来处理新事件（linux下），如果不加任何保护，一个
-新连接来临时，会有多个worker进程在epoll_wait后被唤醒，然后发现自己accept失败。现在，我们可以看看nginx是怎么处理这个惊群问题了。
+nginx就是这样，master进程监听端口号（例如80），所有的nginx
+worker进程开始用epoll_wait来处理新事件（linux下），如果不加
+任何保护，一个新连接来临时，会有多个worker进程在epoll_wait
+后被唤醒，然后发现自己accept失败。现在，我们可以看看nginx是
+怎么处理这个惊群问题了。
 */
 
 void
@@ -314,43 +320,73 @@ ngx_process_events_and_timers(ngx_cycle_t *cycle)
 #endif
     }
 
-    ngx_use_accept_mutex = 1;
-   //ngx_use_accept_mutex表示是否需要通过对accept加锁来解决惊群问题。当nginx worker进程数>1时且配置文件中打开accept_mutex时，这个标志置为1   
+   // ngx_use_accept_mutex = 1;
+   //ngx_use_accept_mutex表示是否需要通过对accept加锁来解决
+   //惊群问题。当nginx worker进程数>1时且配置文件中打开
+   //accept_mutex时，这个标志置为1   
     if (ngx_use_accept_mutex) {
         /*
-              ngx_accept_disabled表示此时满负荷，没必要再处理新连接了，我们在nginx.conf曾经配置了每一个nginx worker进程能够处理的最大连接数，
-          当达到最大数的7/8时，ngx_accept_disabled为正，说明本nginx worker进程非常繁忙，将不再去处理新连接，这也是个简单的负载均衡
-              在当前使用的连接到达总连接数的7/8时，就不会再处理新连接了，同时，在每次调用process_events时都会将ngx_accept_disabled减1，
-          直到ngx_accept_disabled降到总连接数的7/8以下时，才会调用ngx_trylock_accept_mutex试图去处理新连接事件。
+              ngx_accept_disabled 表示此时满负荷，没必要再
+          处理新连接了，我们在nginx.conf曾经配置了每一个
+          nginx worker 进程能够处理的最大连接数，          当达到最大
+          数的7/8时，ngx_accept_disabled为正，说明本
+          nginx worker进程非常繁忙，将不再去处理新连接，这
+          也是个简单的负载均衡
+              在当前使用的连接到达总连接数的7/8时，就不会再
+          处理新连接了，同时，在每次调用process_events时都
+          会将ngx_accept_disabled减1，    直到
+          ngx_accept_disabled降到总连接数的7/8以下时，才会
+          调用ngx_trylock_accept_mutex试图去处理新连接事件。
           */
-        if (ngx_accept_disabled > 0) { //为正说明可用连接用了超过八分之七,则让其他的进程在下面的else中来accept
+        if (ngx_accept_disabled > 0) { 
+			//为正，说明可用连接用了超过八分之七,则让其他的进
+			//程在下面的else中来accept
             ngx_accept_disabled--;
 
         } else {
             /*
-                 如果ngx_trylock_accept_mutex方法没有获取到锁，接下来调用事件驱动模块的process_events方法时只能处理已有的连接上的事件；
-                 如果获取到了锁，调用process_events方法时就会既处理已有连接上的事件，也处理新连接的事件。
+                 如果ngx_trylock_accept_mutex方法没有获取到锁，
+                 接下来调用事件驱动模块的process_events方法时
+                 只能处理已有的连接上的事件；
+                 
+                 如果获取到了锁，调用process_events方法时就会
+                 既处理已有连接上的事件，也处理新连接的事件。
               
                 如何用锁来避免惊群?
-                   尝试锁accept mutex，只有成功获取锁的进程，才会将listen  
-                   套接字放入epoll中。因此，这就保证了只有一个进程拥有  
-                   监听套接口，故所有进程阻塞在epoll_wait时，不会出现惊群现象。  
-                   这里的ngx_trylock_accept_mutex函数中，如果顺利的获取了锁，那么它会将监听端口注册到当前worker进程的epoll当中   
+                   尝试锁accept mutex，只有成功获取锁的进程，
+                   才会将listen    套接字放入epoll中。因此，这
+                   就保证了只有一个进程拥有            监听套接口，故所
+                   有进程阻塞在epoll_wait时，不会出现惊群现
+                   象。  
+                   这里的ngx_trylock_accept_mutex函数中，如
+                   果顺利的获取了锁，那么它会将监听端口注册
+                   到当前worker进程的epoll当中   
 
-               获得accept锁，多个worker仅有一个可以得到这把锁。获得锁不是阻塞过程，都是立刻返回，获取成功的话ngx_accept_mutex_held被置为1。
-               拿到锁，意味着监听句柄被放到本进程的epoll中了，如果没有拿到锁，则监听句柄会被从epoll中取出。 
+               获得accept锁，多个worker仅有一个可以得到这把锁。
+               获得锁不是阻塞过程，都是立刻返回，获取成功的话
+               ngx_accept_mutex_held被置为1。
+               拿到锁，意味着监听句柄被放到本进程的epoll中了，
+               如果没有拿到锁，则监听句柄会被从epoll中取出。 
               */
         /*
-           如果ngx_use_accept_mutex为0也就是未开启accept_mutex锁，则在ngx_worker_process_init->ngx_event_process_init 中把accept连接读事件统计到epoll中
-           否则在ngx_process_events_and_timers->ngx_process_events_and_timers->ngx_trylock_accept_mutex中把accept连接读事件统计到epoll中
+           如果ngx_use_accept_mutex为0，也就是未开启accept_mutex
+           锁，则在ngx_worker_process_init->ngx_event_process_init
+           中把accept连接读事件统计到epoll中
+           否则在ngx_process_events_and_timers->
+           ngx_process_events_and_timers->
+           ngx_trylock_accept_mutex中把accept连接读事件统计到epoll中
            */
-            if (ngx_trylock_accept_mutex(cycle) == NGX_ERROR) { //不管是获取到锁还是没获取到锁都是返回NGX_OK
+            if (ngx_trylock_accept_mutex(cycle) == NGX_ERROR) { 
+				//不管是获取到锁还是没获取到锁都是返回NGX_OK
                 return;
             }
 
             /*
-                拿到锁的话，置flag为NGX_POST_EVENTS，这意味着ngx_process_events函数中，任何事件都将延后处理，会把accept事件都放到
-                ngx_posted_accept_events链表中，epollin|epollout事件都放到ngx_posted_events链表中 
+                拿到锁的话，置flag为NGX_POST_EVENTS，这意味着
+                ngx_process_events函数中，任何事件都将延后处理，
+                会把accept事件都放到
+                ngx_posted_accept_events链表中，epollin|epollout
+                事件都放到ngx_posted_events链表中 
                */
             if (ngx_accept_mutex_held) {
                 flags |= NGX_POST_EVENTS;

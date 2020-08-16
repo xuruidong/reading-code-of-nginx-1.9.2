@@ -278,19 +278,34 @@ ngx_master_process_cycle(ngx_cycle_t *cycle)
     sigaddset(&set, ngx_signal_value(NGX_CHANGEBIN_SIGNAL));
 
     /*
-     每个进程有一个信号掩码(signal mask)。简单地说，信号掩码是一个“位图”，其中每一位都对应着一种信号
-     如果位图中的某一位为1，就表示在执行当前信号的处理程序期间相应的信号暂时被“屏蔽”，使得在执行的过程中不会嵌套地响应那种信号。
+     每个进程有一个信号掩码(signal mask)。简单地说，信号掩码是一个“位图”，
+     其中每一位都对应着一种信号
+     如果位图中的某一位为1，就表示在执行当前信号的处理程序期间相应的信号
+     暂时被“屏蔽”，使得在执行的过程中不会嵌套地响应那种信号。
      
-     为什么对某一信号进行屏蔽呢？我们来看一下对CTRL_C的处理。大家知道，当一个程序正在运行时，在键盘上按一下CTRL_C，内核就会向相应的进程
-     发出一个SIGINT 信号，而对这个信号的默认操作就是通过do_exit()结束该进程的运行。但是，有些应用程序可能对CTRL_C有自己的处理，所以就要
-     为SIGINT另行设置一个处理程序，使它指向应用程序中的一个函数，在那个函数中对CTRL_C这个事件作出响应。但是，在实践中却发现，两次CTRL_C
-     事件往往过于密集，有时候刚刚进入第一个信号的处理程序，第二个SIGINT信号就到达了，而第二个信号的默认操作是杀死进程，这样，第一个信号
-     的处理程序根本没有执行完。为了避免这种情况的出现，就在执行一个信号处理程序的过程中将该种信号自动屏蔽掉。所谓“屏蔽”，与将信号忽略
-     是不同的，它只是将信号暂时“遮盖”一下，一旦屏蔽去掉，已到达的信号又继续得到处理。
+     为什么对某一信号进行屏蔽呢？我们来看一下对CTRL_C的处理。大家知道，
+     当一个程序正在运行时，在键盘上按一下CTRL_C，内核就会向相应的进程     发出
+     一个SIGINT 信号，而对这个信号的默认操作就是通过do_exit()结束该进程的
+     运行。但是，有些应用程序可能对CTRL_C有自己的处理，所以就要     为SIGINT另
+     行设置一个处理程序，使它指向应用程序中的一个函数，在那个函数中对
+     CTRL_C这个事件作出响应。
+     但是，在实践中却发现，两次 CTRL_C              事件往往过于密集，有时候刚刚进入第
+     一个信号的处理程序，第二个SIGINT信号就到达了，而第二个信号的默认操作
+     是杀死进程，这样，第一个信号     的处理程序根本没有执行完。
+     为了避免这种情况的出现，就在执行一个信号处理程序的过程中将该种信号自
+     动屏蔽掉。所谓“屏蔽”，与将信号忽略     是不同的，它只是将信号暂时“遮盖”一
+     下，一旦屏蔽去掉，已到达的信号又继续得到处理。
      
-     所谓屏蔽, 并不是禁止递送信号, 而是暂时阻塞信号的递送,
-     解除屏蔽后, 信号将被递送, 不会丢失
-     */ // 设置这些信号都阻塞，等我们sigpending调用才告诉我有这些事件
+     所谓屏蔽, 并不是禁止递送信号, 而是暂时阻塞信号的递送,     解除屏蔽后, 信号
+     将被递送, 不会丢失
+     */ 
+     /*
+      * xuruidong add
+	  * 实际测试效果， 使用signal 注册信号， 当信号回调函数没有执行完，信号
+	  * 再次来临，不会重入信号回调函数，无论期间来多少次信号，当第一次信号
+	  * 回调函数结束后, 会再（且只）执行一次信号回调函数
+     */
+     // 设置这些信号都阻塞，等我们sigpending调用才告诉我有这些事件
      
     if (sigprocmask(SIG_BLOCK, &set, NULL) == -1) {   //参考下面的sigsuspend     
     //父子进程的继承关系可以参考:http://blog.chinaunix.net/uid-20011314-id-1987626.html
@@ -313,7 +328,7 @@ ngx_master_process_cycle(ngx_cycle_t *cycle)
         exit(2);
     }
 
-    /* 把master process + 参数一起主持主进程名 */
+    /* 把master process + 参数一起组成主进程名 */
     p = ngx_cpymem(title, master_process, sizeof(master_process) - 1);
     for (i = 0; i < ngx_argc; i++) {
         *p++ = ' ';
@@ -659,7 +674,8 @@ ngx_start_worker_processes(ngx_cycle_t *cycle, ngx_int_t n, ngx_int_t type)
     ch.command = NGX_CMD_OPEN_CHANNEL;
 
     /*
-    由master进程按照配置文件中worker进程的数目，启动这些子进程（也就是调用表8-2中的ngx_start_worker_processes方法）。
+    由master进程按照配置文件中worker进程的数目，启动这些子进程（也就是调用表8-2中的
+    ngx_start_worker_processes方法）。
     */
     for (i = 0; i < n; i++) { //n为nginx.conf worker_processes中配置的进程数
 /*
@@ -1114,7 +1130,8 @@ ngx_worker_process_cycle(ngx_cycle_t *cycle, void *data) //data表示这是第几个wor
     ngx_setproctitle("worker process");
 
     /*
-    在ngx_worker_process_cycle有法中，通过检查ngx_exiting、ngx_terminate、ngx_quit、ngx_reopen这4个标志位来决定后续动作。
+    在ngx_worker_process_cycle有法中，通过检查ngx_exiting、ngx_terminate、
+    ngx_quit、ngx_reopen这4个标志位来决定后续动作。
     */
     for ( ;; ) {
 

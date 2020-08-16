@@ -92,13 +92,21 @@ ngx_signal_t  signals[] = {
 };
 
 /*
-master进程怎样启动一个子进程呢？其实很简单，fork系统调用即可以完成。ngx_spawn_process方法封装了fork系统调用，
-并且会从ngx_processes数组中选择一个还未使用的ngx_process_t元素存储这个子进程的相关信息。如果所有1024个数纽元素中已经没有空
-余的元素，也就是说，子进程个数超过了最大值1024，那么将会返回NGX_INVALID_PID。因此，ngx_processes数组中元素的初始化将在ngx_spawn_process方法中进行。
+master进程怎样启动一个子进程呢？其实很简单，fork系统调用即可以完成。
+ngx_spawn_process 方法封装了fork系统调用，并且会从ngx_processes数组
+中选择一个还未使用的ngx_process_t元素存储这个子进程的相关信息。如果
+所有1024个数纽元素中已经没有空余的元素，也就是说，子进程个数超过了
+最大值1024，那么将会返回NGX_INVALID_PID。因此，ngx_processes 数组中
+元素的初始化将在ngx_spawn_process方法中进行。
 */
-//第一个参数是全局的配置，第二个参数是子进程需要执行的函数，第三个参数是proc的参数。第四个类型。  name是子进程的名称
+/*第一个参数是全局的配置，
+第二个参数是子进程需要执行的函数，
+第三个参数是proc的参数。
+第四个类型。  name是子进程的名称
+*/
+//respawn取值为NGX_PROCESS_RESPAWN等，或者为进程在ngx_processes[]中的序号
 ngx_pid_t ngx_spawn_process(ngx_cycle_t *cycle, ngx_spawn_proc_pt proc, void *data,
-    char *name, ngx_int_t respawn) //respawn取值为NGX_PROCESS_RESPAWN等，或者为进程在ngx_processes[]中的序号
+    char *name, ngx_int_t respawn) 
 {
     u_long     on;
     ngx_pid_t  pid;
@@ -124,24 +132,35 @@ ngx_pid_t ngx_spawn_process(ngx_cycle_t *cycle, ngx_spawn_proc_pt proc, void *da
     }
 
 
-    if (respawn != NGX_PROCESS_DETACHED) { //不是分离的子进程      /* 不是热代码替换 */
+    if (respawn != NGX_PROCESS_DETACHED) { 
+		//不是分离的子进程      /* 不是热代码替换 */
 
         /* Solaris 9 still has no AF_LOCAL */
        
         /* 
-          这里相当于Master进程调用socketpair()为新的worker进程创建一对全双工的socket 
+          这里相当于Master进程调用socketpair()为新的worker进程创建一
+          对全双工的socket 
             
-          实际上socketpair 函数跟pipe 函数是类似的，也只能在同个主机上具有亲缘关系的进程间通信，但pipe 创建的匿名管道是半双工的，
+          实际上socketpair 函数跟pipe 函数是类似的，也只能在同个主机
+          上具有亲缘关系的进程间通信，但pipe 创建的匿名管道是半双工的，
           而socketpair 可以认为是创建一个全双工的管道。
 
           int socketpair(int domain, int type, int protocol, int sv[2]);
-          这个方法可以创建一对关联的套接字sv[2]。下面依次介绍它的4个参数：参数d表示域，在Linux下通常取值为AF UNIX；type取值为SOCK。
-          STREAM或者SOCK。DGRAM，它表示在套接字上使用的是TCP还是UDP; protocol必须传递0；sv[2]是一个含有两个元素的整型数组，实际上就
-          是两个套接字。当socketpair返回0时，sv[2]这两个套接字创建成功，否则socketpair返回一1表示失败。
-             当socketpair执行成功时，sv[2]这两个套接字具备下列关系：向sv[0]套接字写入数据，将可以从sv[l]套接字中读取到刚写入的数据；
-          同样，向sv[l]套接字写入数据，也可以从sv[0]中读取到写入的数据。通常，在父、子进程通信前，会先调用socketpair方法创建这样一组
-          套接字，在调用fork方法创建出子进程后，将会在父进程中关闭sv[l]套接字，仅使用sv[0]套接字用于向子进程发送数据以及接收子进程发
-          送来的数据：而在子进程中则关闭sv[0]套接字，仅使用sv[l]套接字既可以接收父进程发来的数据，也可以向父进程发送数据。
+          这个方法可以创建一对关联的套接字sv[2]。
+          下面依次介绍它的4个参数：参数 domain 表示域，在Linux下通常取值
+          为AF UNIX；type取值为SOCK_     STREAM或者SOCK_DGRAM，它表示在套接字
+          上使用的是TCP还是UDP; 
+          protocol必须传递0；sv[2]是一个含有两个元素的整型数组，实际上就
+          是两个套接字。当socketpair返回0时，sv[2]这两个套接字创建成功，
+          否则socketpair返回-1表示失败。
+             当socketpair执行成功时，sv[2]这两个套接字具备下列关系：向
+             sv[0]套接字写入数据，将可以从sv[l]套接字中读取到刚写入的数据；
+          同样，向sv[l]套接字写入数据，也可以从sv[0]中读取到写入的数据。
+          通常，在父、子进程通信前，会先调用socketpair方法创建这样一组
+          套接字，在调用fork方法创建出子进程后，将会在父进程中关闭sv[l]套
+          接字，仅使用sv[0]套接字用于向子进程发送数据以及接收子进程发
+          送来的数据：而在子进程中则关闭sv[0]套接字，仅使用sv[l]套接字既可
+          以接收父进程发来的数据，也可以向父进程发送数据。
           注意socketpair的协议族为AF_UNIX UNXI域
           */  
         if (socketpair(AF_UNIX, SOCK_STREAM, 0, ngx_processes[s].channel) == -1) //在ngx_worker_process_init中添加到事件集
@@ -174,7 +193,8 @@ ngx_pid_t ngx_spawn_process(ngx_cycle_t *cycle, ngx_spawn_proc_pt proc, void *da
         }
         
         /* 
-            设置异步模式： 这里可以看下《网络编程卷一》的ioctl函数和fcntl函数 or 网上查询 
+            设置异步模式： 这里可以看下《网络编程卷一》的ioctl函数和fcntl函数
+            or 网上查询 
           */  
         on = 1; // 标记位，ioctl用于清除（0）或设置（非0）操作  
 

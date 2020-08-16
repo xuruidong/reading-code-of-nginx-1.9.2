@@ -60,7 +60,7 @@
 #define NGX_SHUTDOWN_SIGNAL      QUIT
 #define NGX_TERMINATE_SIGNAL     TERM
 #define NGX_NOACCEPT_SIGNAL      WINCH
-#define NGX_RECONFIGURE_SIGNAL   HUP  //nginx -s reload会触发该新号
+#define NGX_RECONFIGURE_SIGNAL   HUP  //nginx -s reload会触发该信号
 
 #if (NGX_LINUXTHREADS)
 #define NGX_REOPEN_SIGNAL        INFO
