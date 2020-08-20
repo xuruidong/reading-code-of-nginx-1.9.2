@@ -398,7 +398,7 @@ ngx_process_events_and_timers(ngx_cycle_t *cycle)
                     */
                 if (timer == NGX_TIMER_INFINITE
                     || timer > ngx_accept_mutex_delay)
-                {   //如果没获取到锁，则延迟这么多ms重新获取说，继续循环，也就是技术锁被其他进程获得，本进程最多在epoll_wait中睡眠0.5s,然后返回
+                {   //如果没获取到锁，则延迟这么多ms重新获取锁，继续循环，也就是技术锁被其他进程获得，本进程最多在epoll_wait中睡眠0.5s,然后返回
                     timer = ngx_accept_mutex_delay; //保证这么多时间超时的时候出发epoll_wait返回，从而可以更新内存时间
                 }
             }
@@ -408,10 +408,13 @@ ngx_process_events_and_timers(ngx_cycle_t *cycle)
     delta = ngx_current_msec;
 
     /*
-    1.如果进程获的锁，并获取到锁，则该进程在epoll事件发生后会触发返回，然后得到对应的事件handler，加入延迟队列中，然后释放锁，然
-    后在执行对应handler，同时更新时间，判断该进程对应的红黑树中是否有定时器超时，
-    2.如果没有获取到锁，则默认传给epoll_wait的超时时间是0.5s，表示过0.5s继续获取锁，0.5s超时后，会跟新当前时间，同时判断是否有过期的
-      定时器，有则指向对应的定时器函数
+    1.如果进程获的锁，并获取到锁，则该进程在epoll事件发生后会触发
+    返回，然后得到对应的事件handler，加入延迟队列中，然后释放锁，
+    然后在执行对应handler，同时更新时间，判断该进程对应的红黑树中
+    是否有定时器超时，
+    2.如果没有获取到锁，则默认传给epoll_wait的超时时间是0.5s，表
+    示过0.5s继续获取锁，0.5s超时后，会更新当前时间，同时判断是否
+    有过期的    定时器，有则指向对应的定时器函数
     */
 
 /*
@@ -424,7 +427,9 @@ epoll_wait返回，可以是读写事件触发返回，也可能是因为没获取到共享锁，从而等待0.5s
 3.也可以是利用定时器expirt实现的读写事件(参考ngx_http_set_write_handler->ngx_add_timer(ngx_event_add_timer)),触发过程见2，只是在handler中不会执行write_event_handler  read_event_handler
 */
     
-    //linux下，普通网络套接字调用ngx_epoll_process_events函数开始处理，异步文件i/o设置事件的回调方法为ngx_epoll_eventfd_handler
+    /*linux下，普通网络套接字调用ngx_epoll_process_events函数开始
+    处理，异步文件i/o设置事件的回调方法为
+    ngx_epoll_eventfd_handler*/
     (void) ngx_process_events(cycle, timer, flags);
 
     delta = ngx_current_msec - delta; //(void) ngx_process_events(cycle, timer, flags)中epoll等待事件触发过程花费的时间

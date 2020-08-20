@@ -477,17 +477,23 @@ main(int argc, char *const *argv)
 }
 
 /*
-在执行不重启服务升级Nginx的操作时，老的Nginx进程会通过环境变量“NGINX”来传递需要打开的监听端口，
-新的Nginx进程会通过ngx_add_inherited_sockets方法来使用已经打开的TCP监听端口,不采用这种方式的话会报错，说该端口已经bind   
+在执行不重启服务升级Nginx的操作时，老的Nginx进程会通过环境变量“NGINX”
+来传递需要打开的监听端口，新的Nginx进程会通过ngx_add_inherited_sockets
+方法来使用已经打开的TCP监听端口,不采用这种方式的话会报错，说该端口已经
+bind   
 
-ngx_add_inherited_sockets 函数通过环境变量NGINX完成socket的继承，继承来的socket将会放到init_cycle的listening数组中。在NGINX环
-境变量中，每个socket中间用冒号或分号隔开。完成继承同时设置全局变量ngx_inherited为1
+ngx_add_inherited_sockets 函数通过环境变量NGINX完成socket的继承，继承
+来的socket将会放到init_cycle的listening数组中。在NGINX环境变量中，每个
+socket中间用冒号或分号隔开。完成继承同时设置全局变量ngx_inherited为1
 */
 /*  
-Nginx在不重启服务升级时，也就是我们说过的平滑升级时，它会不重启master进程而启动新版本的Nginx程序。这样，旧版本的
-master进程会通过execve系统调用来启动新版本的master进程（先fork出子进程再调用exec来运行新程序），这时旧版本的master
-进程必须要通过一种方式告诉新版本的master进程这是在平滑升级，并且传递一些必要的信息。Nginx是通过环境变量来传递这些
-信息的，新版本的master进程通过ngx_add_inherited_sockets方法由环境变量里读取平滑升级信息，并对旧版本Nginx服务监听的句柄做继承处理。
+Nginx在不重启服务升级时，也就是我们说过的平滑升级时，它会不重启master
+进程而启动新版本的Nginx程序。这样，旧版本的master进程会通过execve系统
+调用来启动新版本的master进程（先fork出子进程再调用exec来运行新程序），
+这时旧版本的master进程必须要通过一种方式告诉新版本的master进程这是在
+平滑升级，并且传递一些必要的信息。Nginx是通过环境变量来传递这些信息的，
+新版本的master进程通过ngx_add_inherited_sockets方法由环境变量里读取平
+滑升级信息，并对旧版本Nginx服务监听的句柄做继承处理。
 */
 static ngx_int_t
 ngx_add_inherited_sockets(ngx_cycle_t *cycle)
@@ -497,8 +503,10 @@ ngx_add_inherited_sockets(ngx_cycle_t *cycle)
     ngx_int_t         s;
     ngx_listening_t  *ls;
 
-    //getenv()用来取得参数envvar环境变量的内容。参数envvar为环境变量的名称，如果该变量存在则会返回指向该内容的指针
-    inherited = (u_char *) getenv(NGINX_VAR); //获取环境变量 这里的"NGINX_VAR"是宏定义，值为"NGINX"   
+    //getenv()用来取得参数envvar环境变量的内容。
+    //参数envvar为环境变量的名称，如果该变量存在则会返回指向该内容的指针
+    inherited = (u_char *) getenv(NGINX_VAR); 
+	//获取环境变量 这里的"NGINX_VAR"是宏定义，值为"NGINX"   
     if (inherited == NULL) {
         return NGX_OK;
     }

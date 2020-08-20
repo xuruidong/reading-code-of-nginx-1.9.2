@@ -366,41 +366,94 @@ ngx_execute_proc(ngx_cycle_t *cycle, void *data)
 Ò»¡¢ÐÅºÅ¼°ÐÅºÅÀ´Ô´
 ÐÅºÅ±¾ÖÊ
 
-ÐÅºÅÊÇÔÚÈí¼þ²ã´ÎÉÏ¶ÔÖÐ¶Ï»úÖÆµÄÒ»ÖÖÄ£Äâ£¬ÔÚÔ­ÀíÉÏ£¬Ò»¸ö½ø³ÌÊÕµ½Ò»¸öÐÅºÅÓë´¦ÀíÆ÷ÊÕµ½Ò»¸öÖÐ¶ÏÇëÇó¿ÉÒÔËµÊÇÒ»ÑùµÄ¡£ÐÅºÅÊÇÒì²½µÄ£¬Ò»¸ö½ø³Ì²»±ØÍ¨¹ýÈÎºÎ²Ù×÷À´µÈ´ýÐÅºÅµÄµ½´ï£¬ÊÂÊµÉÏ£¬½ø³ÌÒ²²»ÖªµÀÐÅºÅµ½µ×Ê²Ã´Ê±ºòµ½´ï¡£
+ÐÅºÅÊÇÔÚÈí¼þ²ã´ÎÉÏ¶ÔÖÐ¶Ï»úÖÆµÄÒ»ÖÖÄ£Äâ£¬ÔÚÔ­ÀíÉÏ£¬Ò»¸ö½ø³ÌÊÕ
+µ½Ò»¸öÐÅºÅÓë´¦ÀíÆ÷ÊÕµ½Ò»¸öÖÐ¶ÏÇëÇó¿ÉÒÔËµÊÇÒ»ÑùµÄ¡£ÐÅºÅÊÇÒì²½
+µÄ£¬Ò»¸ö½ø³Ì²»±ØÍ¨¹ýÈÎºÎ²Ù×÷À´µÈ´ýÐÅºÅµÄµ½´ï£¬ÊÂÊµÉÏ£¬½ø³ÌÒ²
+²»ÖªµÀÐÅºÅµ½µ×Ê²Ã´Ê±ºòµ½´ï¡£
 
-ÐÅºÅÊÇ½ø³Ì¼äÍ¨ÐÅ»úÖÆÖÐÎ¨Ò»µÄÒì²½Í¨ÐÅ»úÖÆ£¬¿ÉÒÔ¿´×÷ÊÇÒì²½Í¨Öª£¬Í¨Öª½ÓÊÕÐÅºÅµÄ½ø³ÌÓÐÄÄÐ©ÊÂÇé·¢ÉúÁË¡£ÐÅºÅ»úÖÆ¾­¹ýPOSIXÊµÊ±À©Õ¹ºó£¬¹¦ÄÜ¸ü¼ÓÇ¿´ó£¬³ýÁË»ù±¾Í¨Öª¹¦ÄÜÍâ£¬»¹¿ÉÒÔ´«µÝ¸½¼ÓÐÅÏ¢¡£
+ÐÅºÅÊÇ½ø³Ì¼äÍ¨ÐÅ»úÖÆÖÐÎ¨Ò»µÄÒì²½Í¨ÐÅ»úÖÆ£¬¿ÉÒÔ¿´×÷ÊÇÒì²½Í¨Öª
+£¬Í¨Öª½ÓÊÕÐÅºÅµÄ½ø³ÌÓÐÄÄÐ©ÊÂÇé·¢ÉúÁË¡£ÐÅºÅ»úÖÆ¾­¹ýPOSIX ÊµÊ±
+À©Õ¹ºó£¬¹¦ÄÜ¸ü¼ÓÇ¿´ó£¬³ýÁË»ù±¾Í¨Öª¹¦ÄÜÍâ£¬»¹¿ÉÒÔ´«µÝ¸½¼ÓÐÅÏ¢¡£
 
 ÐÅºÅÀ´Ô´
 
-ÐÅºÅÊÂ¼þµÄ·¢ÉúÓÐÁ½¸öÀ´Ô´£ºÓ²¼þÀ´Ô´(±ÈÈçÎÒÃÇ°´ÏÂÁË¼üÅÌ»òÕßÆäËüÓ²¼þ¹ÊÕÏ)£»Èí¼þÀ´Ô´£¬×î³£ÓÃ·¢ËÍÐÅºÅµÄÏµÍ³º¯ÊýÊÇkill, raise, alarmºÍsetitimerÒÔ¼°sigqueueº¯Êý£¬Èí¼þÀ´Ô´»¹°üÀ¨Ò»Ð©·Ç·¨ÔËËãµÈ²Ù×÷¡£
+ÐÅºÅÊÂ¼þµÄ·¢ÉúÓÐÁ½¸öÀ´Ô´£ºÓ²¼þÀ´Ô´(±ÈÈçÎÒÃÇ°´ÏÂÁË¼üÅÌ»òÕßÆäËü
+Ó²¼þ¹ÊÕÏ)£»Èí¼þÀ´Ô´£¬×î³£ÓÃ·¢ËÍÐÅºÅµÄÏµÍ³º¯ÊýÊÇkill, raise, 
+alarmºÍsetitimerÒÔ¼° sigqueue º¯Êý£¬Èí¼þÀ´Ô´»¹°üÀ¨Ò»Ð©·Ç·¨ÔËËã
+µÈ²Ù×÷¡£
 
 
 --------------------------------------------------------------------------------
 »ØÒ³Ê×
 ¶þ¡¢ÐÅºÅµÄÖÖÀà
-¿ÉÒÔ´ÓÁ½¸ö²»Í¬µÄ·ÖÀà½Ç¶È¶ÔÐÅºÅ½øÐÐ·ÖÀà£º£¨1£©¿É¿¿ÐÔ·½Ãæ£º¿É¿¿ÐÅºÅÓë²»¿É¿¿ÐÅºÅ£»£¨2£©ÓëÊ±¼äµÄ¹ØÏµÉÏ£ºÊµÊ±ÐÅºÅÓë·ÇÊµÊ±ÐÅºÅ¡£ÔÚ¡¶Linux»·¾³½ø³Ì¼äÍ¨ÐÅ£¨Ò»£©£º¹ÜµÀ¼°ÓÐÃû¹ÜµÀ¡·µÄ¸½1ÖÐÁÐ³öÁËÏµÍ³ËùÖ§³ÖµÄËùÓÐÐÅºÅ¡£
+¿ÉÒÔ´ÓÁ½¸ö²»Í¬µÄ·ÖÀà½Ç¶È¶ÔÐÅºÅ½øÐÐ·ÖÀà£º
+£¨1£©¿É¿¿ÐÔ·½Ãæ£º¿É¿¿ÐÅºÅÓë²»¿É¿¿ÐÅºÅ£»
+£¨2£©ÓëÊ±¼äµÄ¹ØÏµÉÏ£ºÊµÊ±ÐÅºÅÓë·ÇÊµÊ±ÐÅºÅ¡£
+ÔÚ¡¶Linux»·¾³½ø³Ì¼äÍ¨ÐÅ£¨Ò»£©£º¹ÜµÀ¼°ÓÐÃû¹ÜµÀ¡·µÄ¸½1ÖÐÁÐ³ö
+ÁËÏµÍ³ËùÖ§³ÖµÄËùÓÐÐÅºÅ¡£
 
 1¡¢¿É¿¿ÐÅºÅÓë²»¿É¿¿ÐÅºÅ
 "²»¿É¿¿ÐÅºÅ"
 
-LinuxÐÅºÅ»úÖÆ»ù±¾ÉÏÊÇ´ÓUnixÏµÍ³ÖÐ¼Ì³Ð¹ýÀ´µÄ¡£ÔçÆÚUnixÏµÍ³ÖÐµÄÐÅºÅ»úÖÆ±È½Ï¼òµ¥ºÍÔ­Ê¼£¬ºóÀ´ÔÚÊµ¼ùÖÐ±©Â¶³öÒ»Ð©ÎÊÌâ£¬Òò´Ë£¬°ÑÄÇÐ©½¨Á¢ÔÚÔçÆÚ»úÖÆÉÏµÄÐÅºÅ½Ð×ö"²»¿É¿¿ÐÅºÅ"£¬ÐÅºÅÖµÐ¡ÓÚSIGRTMIN(Red hat 7.2ÖÐ£¬SIGRTMIN=32£¬SIGRTMAX=63)µÄÐÅºÅ¶¼ÊÇ²»¿É¿¿ÐÅºÅ¡£Õâ¾ÍÊÇ"²»¿É¿¿ÐÅºÅ"µÄÀ´Ô´¡£ËüµÄÖ÷ÒªÎÊÌâÊÇ£º
+LinuxÐÅºÅ»úÖÆ»ù±¾ÉÏÊÇ´ÓUnixÏµÍ³ÖÐ¼Ì³Ð¹ýÀ´µÄ¡£ÔçÆÚUnixÏµÍ³ÖÐ
+µÄÐÅºÅ»úÖÆ±È½Ï¼òµ¥ºÍÔ­Ê¼£¬ºóÀ´ÔÚÊµ¼ùÖÐ±©Â¶³öÒ»Ð©ÎÊÌâ£¬Òò´Ë£¬
+°ÑÄÇÐ©½¨Á¢ÔÚÔçÆÚ»úÖÆÉÏµÄÐÅºÅ½Ð×ö"²»¿É¿¿ÐÅºÅ"£¬ÐÅºÅÖµÐ¡ÓÚ
+SIGRTMIN(Red hat 7.2ÖÐ£¬SIGRTMIN=32£¬SIGRTMAX=63)µÄÐÅºÅ¶¼ÊÇ
+²»¿É¿¿ÐÅºÅ¡£Õâ¾ÍÊÇ"²»¿É¿¿ÐÅºÅ"µÄÀ´Ô´¡£ËüµÄÖ÷ÒªÎÊÌâÊÇ£º
 
-½ø³ÌÃ¿´Î´¦ÀíÐÅºÅºó£¬¾Í½«¶ÔÐÅºÅµÄÏìÓ¦ÉèÖÃÎªÄ¬ÈÏ¶¯×÷¡£ÔÚÄ³Ð©Çé¿öÏÂ£¬½«µ¼ÖÂ¶ÔÐÅºÅµÄ´íÎó´¦Àí£»Òò´Ë£¬ÓÃ»§Èç¹û²»Ï£ÍûÕâÑùµÄ²Ù×÷£¬ÄÇÃ´¾ÍÒªÔÚÐÅºÅ´¦Àíº¯Êý½áÎ²ÔÙÒ»´Îµ÷ÓÃsignal()£¬ÖØÐÂ°²×°¸ÃÐÅºÅ¡£
+½ø³ÌÃ¿´Î´¦ÀíÐÅºÅºó£¬¾Í½«¶ÔÐÅºÅµÄÏìÓ¦ÉèÖÃÎªÄ¬ÈÏ¶¯×÷¡£ÔÚÄ³Ð©Çé
+¿öÏÂ£¬½«µ¼ÖÂ¶ÔÐÅºÅµÄ´íÎó´¦Àí£»Òò´Ë£¬ÓÃ»§Èç¹û²»Ï£ÍûÕâÑùµÄ²Ù×÷
+£¬ÄÇÃ´¾ÍÒªÔÚÐÅºÅ´¦Àíº¯Êý½áÎ²ÔÙÒ»´Îµ÷ÓÃsignal()£¬ÖØÐÂ°²×°¸ÃÐÅ
+ºÅ¡£
 ÐÅºÅ¿ÉÄÜ¶ªÊ§£¬ºóÃæ½«¶Ô´ËÏêÏ¸²ûÊö¡£ 
-Òò´Ë£¬ÔçÆÚunixÏÂµÄ²»¿É¿¿ÐÅºÅÖ÷ÒªÖ¸µÄÊÇ½ø³Ì¿ÉÄÜ¶ÔÐÅºÅ×ö³ö´íÎóµÄ·´Ó¦ÒÔ¼°ÐÅºÅ¿ÉÄÜ¶ªÊ§¡£ LinuxÖ§³Ö²»¿É¿¿ÐÅºÅ£¬µ«ÊÇ¶Ô²»¿É¿¿ÐÅºÅ»úÖÆ×öÁË¸Ä½ø£ºÔÚµ÷ÓÃÍêÐÅºÅ´¦Àíº¯Êýºó£¬²»±ØÖØÐÂµ÷ÓÃ¸ÃÐÅºÅµÄ°²×°º¯Êý£¨ÐÅºÅ°²×°º¯ÊýÊÇÔÚ¿É¿¿»úÖÆÉÏµÄÊµÏÖ£©¡£Òò´Ë£¬LinuxÏÂµÄ²»¿É¿¿ÐÅºÅÎÊÌâÖ÷ÒªÖ¸µÄÊÇÐÅºÅ¿ÉÄÜ¶ªÊ§¡£
+Òò´Ë£¬ÔçÆÚunixÏÂµÄ²»¿É¿¿ÐÅºÅÖ÷ÒªÖ¸µÄÊÇ½ø³Ì¿ÉÄÜ¶ÔÐÅºÅ×ö³ö´íÎó
+µÄ·´Ó¦ÒÔ¼°ÐÅºÅ¿ÉÄÜ¶ªÊ§¡£ LinuxÖ§³Ö²»¿É¿¿ÐÅºÅ£¬µ«ÊÇ¶Ô²»¿É¿¿ÐÅ
+ºÅ»úÖÆ×öÁË¸Ä½ø£ºÔÚµ÷ÓÃÍêÐÅºÅ´¦Àíº¯Êýºó£¬²»±ØÖØÐÂµ÷ÓÃ¸ÃÐÅºÅµÄ
+°²×°º¯Êý£¨ÐÅºÅ°²×°º¯ÊýÊÇÔÚ¿É¿¿»úÖÆÉÏµÄÊµÏÖ£©¡£Òò´Ë£¬Linux ÏÂ
+µÄ²»¿É¿¿ÐÅºÅÎÊÌâÖ÷ÒªÖ¸µÄÊÇÐÅºÅ¿ÉÄÜ¶ªÊ§¡£
 
 "¿É¿¿ÐÅºÅ"
 
-Ëæ×ÅÊ±¼äµÄ·¢Õ¹£¬Êµ¼ùÖ¤Ã÷ÁËÓÐ±ØÒª¶ÔÐÅºÅµÄÔ­Ê¼»úÖÆ¼ÓÒÔ¸Ä½øºÍÀ©³ä¡£ËùÒÔ£¬ºóÀ´³öÏÖµÄ¸÷ÖÖUnix°æ±¾·Ö±ðÔÚÕâ·½Ãæ½øÐÐÁËÑÐ¾¿£¬Á¦Í¼ÊµÏÖ"¿É¿¿ÐÅºÅ"¡£ÓÉÓÚÔ­À´¶¨ÒåµÄÐÅºÅÒÑÓÐÐí¶àÓ¦ÓÃ£¬²»ºÃÔÙ×ö¸Ä¶¯£¬×îÖÕÖ»ºÃÓÖÐÂÔö¼ÓÁËÒ»Ð©ÐÅºÅ£¬²¢ÔÚÒ»¿ªÊ¼¾Í°ÑËüÃÇ¶¨ÒåÎª¿É¿¿ÐÅºÅ£¬ÕâÐ©ÐÅºÅÖ§³ÖÅÅ¶Ó£¬²»»á¶ªÊ§¡£Í¬Ê±£¬ÐÅºÅµÄ·¢ËÍºÍ°²×°Ò²³öÏÖÁËÐÂ°æ±¾£ºÐÅºÅ·¢ËÍº¯Êýsigqueue()¼°ÐÅºÅ°²×°º¯Êýsigaction()¡£POSIX.4¶Ô¿É¿¿ÐÅºÅ»úÖÆ×öÁË±ê×¼»¯¡£µ«ÊÇ£¬POSIXÖ»¶Ô¿É¿¿ÐÅºÅ»úÖÆÓ¦¾ßÓÐµÄ¹¦ÄÜÒÔ¼°ÐÅºÅ»úÖÆµÄ¶ÔÍâ½Ó¿Ú×öÁË±ê×¼»¯£¬¶ÔÐÅºÅ»úÖÆµÄÊµÏÖÃ»ÓÐ×÷¾ßÌåµÄ¹æ¶¨¡£
+Ëæ×ÅÊ±¼äµÄ·¢Õ¹£¬Êµ¼ùÖ¤Ã÷ÁËÓÐ±ØÒª¶ÔÐÅºÅµÄÔ­Ê¼»úÖÆ¼ÓÒÔ¸Ä½øºÍÀ©
+³ä¡£ËùÒÔ£¬ºóÀ´³öÏÖµÄ¸÷ÖÖUnix°æ±¾·Ö±ðÔÚÕâ·½Ãæ½øÐÐÁËÑÐ¾¿£¬Á¦Í¼
+ÊµÏÖ"¿É¿¿ÐÅºÅ"¡£ÓÉÓÚÔ­À´¶¨ÒåµÄÐÅºÅÒÑÓÐÐí¶àÓ¦ÓÃ£¬²»ºÃÔÙ×ö¸Ä¶¯
+£¬×îÖÕÖ»ºÃÓÖÐÂÔö¼ÓÁËÒ»Ð©ÐÅºÅ£¬²¢ÔÚÒ»¿ªÊ¼¾Í°ÑËüÃÇ¶¨ÒåÎª¿É¿¿ÐÅ
+ºÅ£¬ÕâÐ©ÐÅºÅÖ§³ÖÅÅ¶Ó£¬²»»á¶ªÊ§¡£Í¬Ê±£¬ÐÅºÅµÄ·¢ËÍºÍ°²×°Ò²³öÏÖ
+ÁËÐÂ°æ±¾£ºÐÅºÅ·¢ËÍº¯Êýsigqueue()¼°ÐÅºÅ°²×°º¯Êýsigaction()¡£
+POSIX.4¶Ô¿É¿¿ÐÅºÅ»úÖÆ×öÁË±ê×¼»¯¡£µ«ÊÇ£¬POSIXÖ»¶Ô¿É¿¿ÐÅºÅ»úÖÆ
+Ó¦¾ßÓÐµÄ¹¦ÄÜÒÔ¼°ÐÅºÅ»úÖÆµÄ¶ÔÍâ½Ó¿Ú×öÁË±ê×¼»¯£¬¶ÔÐÅºÅ»úÖÆµÄÊµ
+ÏÖÃ»ÓÐ×÷¾ßÌåµÄ¹æ¶¨¡£
 
-ÐÅºÅÖµÎ»ÓÚSIGRTMINºÍSIGRTMAXÖ®¼äµÄÐÅºÅ¶¼ÊÇ¿É¿¿ÐÅºÅ£¬¿É¿¿ÐÅºÅ¿Ë·þÁËÐÅºÅ¿ÉÄÜ¶ªÊ§µÄÎÊÌâ¡£LinuxÔÚÖ§³ÖÐÂ°æ±¾µÄÐÅºÅ°²×°º¯Êýsigation£¨£©ÒÔ¼°ÐÅºÅ·¢ËÍº¯Êýsigqueue()µÄÍ¬Ê±£¬ÈÔÈ»Ö§³ÖÔçÆÚµÄsignal£¨£©ÐÅºÅ°²×°º¯Êý£¬Ö§³ÖÐÅºÅ·¢ËÍº¯Êýkill()¡£
+ÐÅºÅÖµÎ»ÓÚSIGRTMINºÍSIGRTMAXÖ®¼äµÄÐÅºÅ¶¼ÊÇ¿É¿¿ÐÅºÅ£¬¿É¿¿ÐÅºÅ
+¿Ë·þÁËÐÅºÅ¿ÉÄÜ¶ªÊ§µÄÎÊÌâ¡£LinuxÔÚÖ§³ÖÐÂ°æ±¾µÄÐÅºÅ°²×°º¯Êý 
+sigation()ÒÔ¼°ÐÅºÅ·¢ËÍº¯Êýsigqueue()µÄÍ¬Ê±£¬ÈÔÈ»Ö§³ÖÔçÆÚµÄ
+signal() ÐÅºÅ°²×°º¯Êý£¬Ö§³ÖÐÅºÅ·¢ËÍº¯Êýkill()¡£
 
-×¢£º²»ÒªÓÐÕâÑùµÄÎó½â£ºÓÉsigqueue()·¢ËÍ¡¢sigaction°²×°µÄÐÅºÅ¾ÍÊÇ¿É¿¿µÄ¡£ÊÂÊµÉÏ£¬¿É¿¿ÐÅºÅÊÇÖ¸ºóÀ´Ìí¼ÓµÄÐÂÐÅºÅ£¨ÐÅºÅÖµÎ»ÓÚSIGRTMIN¼°SIGRTMAXÖ®¼ä£©£»²»¿É¿¿ÐÅºÅÊÇÐÅºÅÖµÐ¡ÓÚSIGRTMINµÄÐÅºÅ¡£ÐÅºÅµÄ¿É¿¿Óë²»¿É¿¿Ö»ÓëÐÅºÅÖµÓÐ¹Ø£¬ÓëÐÅºÅµÄ·¢ËÍ¼°°²×°º¯ÊýÎÞ¹Ø¡£Ä¿Ç°linuxÖÐµÄsignal()ÊÇÍ¨¹ýsigation()º¯ÊýÊµÏÖµÄ£¬Òò´Ë£¬¼´Ê¹Í¨¹ýsignal£¨£©°²×°µÄÐÅºÅ£¬ÔÚÐÅºÅ´¦Àíº¯ÊýµÄ½áÎ²Ò²²»±ØÔÙµ÷ÓÃÒ»´ÎÐÅºÅ°²×°º¯Êý¡£Í¬Ê±£¬ÓÉsignal()°²×°µÄÊµÊ±ÐÅºÅÖ§³ÖÅÅ¶Ó£¬Í¬Ñù²»»á¶ªÊ§¡£
+×¢£º²»ÒªÓÐÕâÑùµÄÎó½â£ºÓÉsigqueue()·¢ËÍ¡¢sigaction°²×°µÄÐÅºÅ
+¾ÍÊÇ¿É¿¿µÄ¡£ÊÂÊµÉÏ£¬¿É¿¿ÐÅºÅÊÇÖ¸ºóÀ´Ìí¼ÓµÄÐÂÐÅºÅ£¨ÐÅºÅÖµÎ»ÓÚ
+SIGRTMIN¼°SIGRTMAXÖ®¼ä£©£»²»¿É¿¿ÐÅºÅÊÇÐÅºÅÖµÐ¡ÓÚSIGRTMINµÄÐÅ
+ºÅ¡£ÐÅºÅµÄ¿É¿¿Óë²»¿É¿¿Ö»ÓëÐÅºÅÖµÓÐ¹Ø£¬ÓëÐÅºÅµÄ·¢ËÍ¼°°²×°º¯Êý
+ÎÞ¹Ø¡£Ä¿Ç°linuxÖÐµÄsignal()ÊÇÍ¨¹ýsigation()º¯ÊýÊµÏÖµÄ£¬Òò´Ë£¬
+¼´Ê¹Í¨¹ýsignal£¨£©°²×°µÄÐÅºÅ£¬ÔÚÐÅºÅ´¦Àíº¯ÊýµÄ½áÎ²Ò²²»±ØÔÙµ÷
+ÓÃÒ»´ÎÐÅºÅ°²×°º¯Êý¡£Í¬Ê±£¬ÓÉsignal()°²×°µÄÊµÊ±ÐÅºÅÖ§³ÖÅÅ¶Ó£¬
+Í¬Ñù²»»á¶ªÊ§¡£
 
-¶ÔÓÚÄ¿Ç°linuxµÄÁ½¸öÐÅºÅ°²×°º¯Êý:signal()¼°sigaction()À´Ëµ£¬ËüÃÇ¶¼²»ÄÜ°ÑSIGRTMINÒÔÇ°µÄÐÅºÅ±ä³É¿É¿¿ÐÅºÅ£¨¶¼²»Ö§³ÖÅÅ¶Ó£¬ÈÔÓÐ¿ÉÄÜ¶ªÊ§£¬ÈÔÈ»ÊÇ²»¿É¿¿ÐÅºÅ£©£¬¶øÇÒ¶ÔSIGRTMINÒÔºóµÄÐÅºÅ¶¼Ö§³ÖÅÅ¶Ó¡£ÕâÁ½¸öº¯ÊýµÄ×î´óÇø±ðÔÚÓÚ£¬¾­¹ýsigaction°²×°µÄÐÅºÅ¶¼ÄÜ´«µÝÐÅÏ¢¸øÐÅºÅ´¦Àíº¯Êý£¨¶ÔËùÓÐÐÅºÅÕâÒ»µã¶¼³ÉÁ¢£©£¬¶ø¾­¹ýsignal°²×°µÄÐÅºÅÈ´²»ÄÜÏòÐÅºÅ´¦Àíº¯Êý´«µÝÐÅÏ¢¡£¶ÔÓÚÐÅºÅ·¢ËÍº¯ÊýÀ´ËµÒ²ÊÇÒ»ÑùµÄ¡£
+¶ÔÓÚÄ¿Ç°linuxµÄÁ½¸öÐÅºÅ°²×°º¯Êý:signal()¼°sigaction()À´Ëµ£¬Ëü
+ÃÇ¶¼²»ÄÜ°ÑSIGRTMINÒÔÇ°µÄÐÅºÅ±ä³É¿É¿¿ÐÅºÅ£¨¶¼²»Ö§³ÖÅÅ¶Ó£¬ÈÔÓÐ
+¿ÉÄÜ¶ªÊ§£¬ÈÔÈ»ÊÇ²»¿É¿¿ÐÅºÅ£©£¬¶øÇÒ¶ÔSIGRTMINÒÔºóµÄÐÅºÅ¶¼Ö§³Ö
+ÅÅ¶Ó¡£ÕâÁ½¸öº¯ÊýµÄ×î´óÇø±ðÔÚÓÚ£¬¾­¹ýsigaction°²×°µÄÐÅºÅ¶¼ÄÜ´«
+µÝÐÅÏ¢¸øÐÅºÅ´¦Àíº¯Êý£¨¶ÔËùÓÐÐÅºÅÕâÒ»µã¶¼³ÉÁ¢£©£¬¶ø¾­¹ýsignal
+°²×°µÄÐÅºÅÈ´²»ÄÜÏòÐÅºÅ´¦Àíº¯Êý´«µÝÐÅÏ¢¡£¶ÔÓÚÐÅºÅ·¢ËÍº¯ÊýÀ´Ëµ
+Ò²ÊÇÒ»ÑùµÄ¡£
 
 2¡¢ÊµÊ±ÐÅºÅÓë·ÇÊµÊ±ÐÅºÅ
-ÔçÆÚUnixÏµÍ³Ö»¶¨ÒåÁË32ÖÖÐÅºÅ£¬Ret hat7.2Ö§³Ö64ÖÖÐÅºÅ£¬±àºÅ0-63(SIGRTMIN=31£¬SIGRTMAX=63)£¬½«À´¿ÉÄÜ½øÒ»²½Ôö¼Ó£¬ÕâÐèÒªµÃµ½ÄÚºËµÄÖ§³Ö¡£Ç°32ÖÖÐÅºÅÒÑ¾­ÓÐÁËÔ¤¶¨ÒåÖµ£¬Ã¿¸öÐÅºÅÓÐÁËÈ·¶¨µÄÓÃÍ¾¼°º¬Òå£¬²¢ÇÒÃ¿ÖÖÐÅºÅ¶¼ÓÐ¸÷×ÔµÄÈ±Ê¡¶¯×÷¡£Èç°´¼üÅÌµÄCTRL ^CÊ±£¬»á²úÉúSIGINTÐÅºÅ£¬¶Ô¸ÃÐÅºÅµÄÄ¬ÈÏ·´Ó¦¾ÍÊÇ½ø³ÌÖÕÖ¹¡£ºó32¸öÐÅºÅ±íÊ¾ÊµÊ±ÐÅºÅ£¬µÈÍ¬ÓÚÇ°Ãæ²ûÊöµÄ¿É¿¿ÐÅºÅ¡£Õâ±£Ö¤ÁË·¢ËÍµÄ¶à¸öÊµÊ±ÐÅºÅ¶¼±»½ÓÊÕ¡£ÊµÊ±ÐÅºÅÊÇPOSIX±ê×¼µÄÒ»²¿·Ö£¬¿ÉÓÃÓÚÓ¦ÓÃ½ø³Ì¡£
+ÔçÆÚUnixÏµÍ³Ö»¶¨ÒåÁË32ÖÖÐÅºÅ£¬Ret hat7.2Ö§³Ö64ÖÖÐÅºÅ£¬±àºÅ0-
+63(SIGRTMIN=31£¬SIGRTMAX=63)£¬½«À´¿ÉÄÜ½øÒ»²½Ôö¼Ó£¬ÕâÐèÒªµÃµ½
+ÄÚºËµÄÖ§³Ö¡£Ç°32ÖÖÐÅºÅÒÑ¾­ÓÐÁËÔ¤¶¨ÒåÖµ£¬Ã¿¸öÐÅºÅÓÐÁËÈ·¶¨µÄÓÃ
+Í¾¼°º¬Òå£¬²¢ÇÒÃ¿ÖÖÐÅºÅ¶¼ÓÐ¸÷×ÔµÄÈ±Ê¡¶¯×÷¡£Èç°´¼üÅÌµÄCTRL ^C
+Ê±£¬»á²úÉúSIGINTÐÅºÅ£¬¶Ô¸ÃÐÅºÅµÄÄ¬ÈÏ·´Ó¦¾ÍÊÇ½ø³ÌÖÕÖ¹¡£ºó32¸ö
+ÐÅºÅ±íÊ¾ÊµÊ±ÐÅºÅ£¬µÈÍ¬ÓÚÇ°Ãæ²ûÊöµÄ¿É¿¿ÐÅºÅ¡£Õâ±£Ö¤ÁË·¢ËÍµÄ¶à
+¸öÊµÊ±ÐÅºÅ¶¼±»½ÓÊÕ¡£ÊµÊ±ÐÅºÅÊÇPOSIX±ê×¼µÄÒ»²¿·Ö£¬¿ÉÓÃÓÚÓ¦ÓÃ½ø³Ì¡£
 
 ·ÇÊµÊ±ÐÅºÅ¶¼²»Ö§³ÖÅÅ¶Ó£¬¶¼ÊÇ²»¿É¿¿ÐÅºÅ£»ÊµÊ±ÐÅºÅ¶¼Ö§³ÖÅÅ¶Ó£¬¶¼ÊÇ¿É¿¿ÐÅºÅ¡£
 
@@ -408,15 +461,24 @@ LinuxÐÅºÅ»úÖÆ»ù±¾ÉÏÊÇ´ÓUnixÏµÍ³ÖÐ¼Ì³Ð¹ýÀ´µÄ¡£ÔçÆÚUnixÏµÍ³ÖÐµÄÐÅºÅ»úÖÆ±È½Ï¼òµ¥ºÍÔ
 --------------------------------------------------------------------------------
 »ØÒ³Ê×
 Èý¡¢½ø³Ì¶ÔÐÅºÅµÄÏìÓ¦
-½ø³Ì¿ÉÒÔÍ¨¹ýÈýÖÖ·½Ê½À´ÏìÓ¦Ò»¸öÐÅºÅ£º£¨1£©ºöÂÔÐÅºÅ£¬¼´¶ÔÐÅºÅ²»×öÈÎºÎ´¦Àí£¬ÆäÖÐ£¬ÓÐÁ½¸öÐÅºÅ²»ÄÜºöÂÔ£ºSIGKILL¼°SIGSTOP£»£¨2£©²¶×½ÐÅºÅ¡£¶¨ÒåÐÅºÅ´¦Àíº¯Êý£¬µ±ÐÅºÅ·¢ÉúÊ±£¬Ö´ÐÐÏàÓ¦µÄ´¦Àíº¯Êý£»£¨3£©Ö´ÐÐÈ±Ê¡²Ù×÷£¬Linux¶ÔÃ¿ÖÖÐÅºÅ¶¼¹æ¶¨ÁËÄ¬ÈÏ²Ù×÷£¬ÏêÏ¸Çé¿öÇë²Î¿¼[2]ÒÔ¼°ÆäËü×ÊÁÏ¡£×¢Òâ£¬½ø³Ì¶ÔÊµÊ±ÐÅºÅµÄÈ±Ê¡·´Ó¦ÊÇ½ø³ÌÖÕÖ¹¡£
+½ø³Ì¿ÉÒÔÍ¨¹ýÈýÖÖ·½Ê½À´ÏìÓ¦Ò»¸öÐÅºÅ£º
+£¨1£©ºöÂÔÐÅºÅ£¬¼´¶ÔÐÅºÅ²»×öÈÎºÎ´¦Àí£¬ÆäÖÐ£¬ÓÐÁ½¸öÐÅºÅ²»ÄÜºö
+ÂÔ£ºSIGKILL¼°SIGSTOP£»
+£¨2£©²¶×½ÐÅºÅ¡£¶¨ÒåÐÅºÅ´¦Àíº¯Êý£¬µ±ÐÅºÅ·¢ÉúÊ±£¬Ö´ÐÐÏàÓ¦µÄ´¦
+Àíº¯Êý£»
+£¨3£©Ö´ÐÐÈ±Ê¡²Ù×÷£¬Linux ¶ÔÃ¿ÖÖÐÅºÅ¶¼¹æ¶¨ÁËÄ¬ÈÏ²Ù×÷£¬ÏêÏ¸Çé
+¿öÇë²Î¿¼[2]ÒÔ¼°ÆäËü×ÊÁÏ¡£×¢Òâ£¬½ø³Ì¶ÔÊµÊ±ÐÅºÅµÄÈ±Ê¡·´Ó¦ÊÇ½ø
+³ÌÖÕÖ¹¡£
 
-Linux¾¿¾¹²ÉÓÃÉÏÊöÈýÖÖ·½Ê½µÄÄÄÒ»¸öÀ´ÏìÓ¦ÐÅºÅ£¬È¡¾öÓÚ´«µÝ¸øÏàÓ¦APIº¯ÊýµÄ²ÎÊý¡£
+Linux ¾¿¾¹²ÉÓÃÉÏÊöÈýÖÖ·½Ê½µÄÄÄÒ»¸öÀ´ÏìÓ¦ÐÅºÅ£¬È¡¾öÓÚ´«µÝ¸ø
+ÏàÓ¦APIº¯ÊýµÄ²ÎÊý¡£
 
 
 --------------------------------------------------------------------------------
 »ØÒ³Ê×
 ËÄ¡¢ÐÅºÅµÄ·¢ËÍ
-·¢ËÍÐÅºÅµÄÖ÷Òªº¯ÊýÓÐ£ºkill()¡¢raise()¡¢ sigqueue()¡¢alarm()¡¢setitimer()ÒÔ¼°abort()¡£
+·¢ËÍÐÅºÅµÄÖ÷Òªº¯ÊýÓÐ£ºkill()¡¢raise()¡¢ sigqueue()¡¢alarm()¡¢
+setitimer()ÒÔ¼°abort()¡£
 
 1¡¢kill() 
 #include <sys/types.h> 
@@ -429,14 +491,22 @@ pid=0 Í¬Ò»¸ö½ø³Ì×éµÄ½ø³Ì
 pid<0 pid!=-1 ½ø³Ì×éIDÎª -pidµÄËùÓÐ½ø³Ì 
 pid=-1 ³ý·¢ËÍ½ø³Ì×ÔÉíÍâ£¬ËùÓÐ½ø³ÌID´óÓÚ1µÄ½ø³Ì 
 
-SinnoÊÇÐÅºÅÖµ£¬µ±Îª0Ê±£¨¼´¿ÕÐÅºÅ£©£¬Êµ¼Ê²»·¢ËÍÈÎºÎÐÅºÅ£¬µ«ÕÕ³£½øÐÐ´íÎó¼ì²é£¬Òò´Ë£¬¿ÉÓÃÓÚ¼ì²éÄ¿±ê½ø³ÌÊÇ·ñ´æÔÚ£¬ÒÔ¼°µ±Ç°½ø³ÌÊÇ·ñ¾ßÓÐÏòÄ¿±ê·¢ËÍÐÅºÅµÄÈ¨ÏÞ£¨rootÈ¨ÏÞµÄ½ø³Ì¿ÉÒÔÏòÈÎºÎ½ø³Ì·¢ËÍÐÅºÅ£¬·ÇrootÈ¨ÏÞµÄ½ø³ÌÖ»ÄÜÏòÊôÓÚÍ¬Ò»¸ösession»òÕßÍ¬Ò»¸öÓÃ»§µÄ½ø³Ì·¢ËÍÐÅºÅ£©¡£
+SinnoÊÇÐÅºÅÖµ£¬µ±Îª0Ê±£¨¼´¿ÕÐÅºÅ£©£¬Êµ¼Ê²»·¢ËÍÈÎºÎÐÅºÅ£¬µ«
+ÕÕ³£½øÐÐ´íÎó¼ì²é£¬Òò´Ë£¬¿ÉÓÃÓÚ¼ì²éÄ¿±ê½ø³ÌÊÇ·ñ´æÔÚ£¬ÒÔ¼°µ±
+Ç°½ø³ÌÊÇ·ñ¾ßÓÐÏòÄ¿±ê·¢ËÍÐÅºÅµÄÈ¨ÏÞ£¨rootÈ¨ÏÞµÄ½ø³Ì¿ÉÒÔÏòÈÎ
+ºÎ½ø³Ì·¢ËÍÐÅºÅ£¬·ÇrootÈ¨ÏÞµÄ½ø³ÌÖ»ÄÜÏòÊôÓÚÍ¬Ò»¸ösession»ò
+ÕßÍ¬Ò»¸öÓÃ»§µÄ½ø³Ì·¢ËÍÐÅºÅ£©¡£
 
-Kill()×î³£ÓÃÓÚpid>0Ê±µÄÐÅºÅ·¢ËÍ£¬µ÷ÓÃ³É¹¦·µ»Ø 0£» ·ñÔò£¬·µ»Ø -1¡£×¢£º¶ÔÓÚpid<0Ê±µÄÇé¿ö£¬¶ÔÓÚÄÄÐ©½ø³Ì½«½ÓÊÜÐÅºÅ£¬¸÷ÖÖ°æ±¾Ëµ·¨²»Ò»£¬ÆäÊµºÜ¼òµ¥£¬²ÎÔÄÄÚºËÔ´Âëkernal/signal.c¼´¿É£¬ÉÏ±íÖÐµÄ¹æÔòÊÇ²Î¿¼red hat 7.2¡£
+Kill()×î³£ÓÃÓÚpid>0Ê±µÄÐÅºÅ·¢ËÍ£¬µ÷ÓÃ³É¹¦·µ»Ø 0£» ·ñÔò£¬·µ
+»Ø -1¡£×¢£º¶ÔÓÚpid<0Ê±µÄÇé¿ö£¬¶ÔÓÚÄÄÐ©½ø³Ì½«½ÓÊÜÐÅºÅ£¬¸÷ÖÖ
+°æ±¾Ëµ·¨²»Ò»£¬ÆäÊµºÜ¼òµ¥£¬²ÎÔÄÄÚºËÔ´Âëkernal/signal.c¼´¿É£¬
+ÉÏ±íÖÐµÄ¹æÔòÊÇ²Î¿¼red hat 7.2¡£
 
 2¡¢raise£¨£© 
 #include <signal.h> 
 int raise(int signo) 
-Ïò½ø³Ì±¾Éí·¢ËÍÐÅºÅ£¬²ÎÊýÎª¼´½«·¢ËÍµÄÐÅºÅÖµ¡£µ÷ÓÃ³É¹¦·µ»Ø 0£»·ñÔò£¬·µ»Ø -1¡£ 
+Ïò½ø³Ì±¾Éí·¢ËÍÐÅºÅ£¬²ÎÊýÎª¼´½«·¢ËÍµÄÐÅºÅÖµ¡£µ÷ÓÃ³É¹¦·µ»Ø 0£»
+·ñÔò£¬·µ»Ø -1¡£ 
 
 3¡¢sigqueue£¨£© 
 #include <sys/types.h> 
@@ -444,34 +514,60 @@ int raise(int signo)
 int sigqueue(pid_t pid, int sig, const union sigval val) 
 µ÷ÓÃ³É¹¦·µ»Ø 0£»·ñÔò£¬·µ»Ø -1¡£ 
 
-sigqueue()ÊÇ±È½ÏÐÂµÄ·¢ËÍÐÅºÅÏµÍ³µ÷ÓÃ£¬Ö÷ÒªÊÇÕë¶ÔÊµÊ±ÐÅºÅÌá³öµÄ£¨µ±È»Ò²Ö§³ÖÇ°32ÖÖ£©£¬Ö§³ÖÐÅºÅ´øÓÐ²ÎÊý£¬Óëº¯Êýsigaction()ÅäºÏÊ¹ÓÃ¡£
+sigqueue()ÊÇ±È½ÏÐÂµÄ·¢ËÍÐÅºÅÏµÍ³µ÷ÓÃ£¬Ö÷ÒªÊÇÕë¶ÔÊµÊ±ÐÅºÅÌá
+³öµÄ£¨µ±È»Ò²Ö§³ÖÇ°32ÖÖ£©£¬Ö§³ÖÐÅºÅ´øÓÐ²ÎÊý£¬Óëº¯Êý
+sigaction()ÅäºÏÊ¹ÓÃ¡£
 
-sigqueueµÄµÚÒ»¸ö²ÎÊýÊÇÖ¸¶¨½ÓÊÕÐÅºÅµÄ½ø³ÌID£¬µÚ¶þ¸ö²ÎÊýÈ·¶¨¼´½«·¢ËÍµÄÐÅºÅ£¬µÚÈý¸ö²ÎÊýÊÇÒ»¸öÁªºÏÊý¾Ý½á¹¹union sigval£¬Ö¸¶¨ÁËÐÅºÅ´«µÝµÄ²ÎÊý£¬¼´Í¨³£ËùËµµÄ4×Ö½ÚÖµ¡£
+sigqueueµÄµÚÒ»¸ö²ÎÊýÊÇÖ¸¶¨½ÓÊÕÐÅºÅµÄ½ø³ÌID£¬µÚ¶þ¸ö²ÎÊýÈ·¶¨
+¼´½«·¢ËÍµÄÐÅºÅ£¬µÚÈý¸ö²ÎÊýÊÇÒ»¸öÁªºÏÊý¾Ý½á¹¹union sigval£¬
+Ö¸¶¨ÁËÐÅºÅ´«µÝµÄ²ÎÊý£¬¼´Í¨³£ËùËµµÄ4×Ö½ÚÖµ¡£
 
  	typedef union sigval {
  		int  sival_int;
  		void *sival_ptr;
- 	}sigval_t;sigqueue()±Èkill()´«µÝÁË¸ü¶àµÄ¸½¼ÓÐÅÏ¢£¬µ«sigqueue()Ö»ÄÜÏòÒ»¸ö½ø³Ì·¢ËÍÐÅºÅ£¬¶ø²»ÄÜ·¢ËÍÐÅºÅ¸øÒ»¸ö½ø³Ì×é¡£Èç¹ûsigno=0£¬½«»áÖ´ÐÐ´íÎó¼ì²é£¬µ«Êµ¼ÊÉÏ²»·¢ËÍÈÎºÎÐÅºÅ£¬0ÖµÐÅºÅ¿ÉÓÃÓÚ¼ì²épidµÄÓÐÐ§ÐÔÒÔ¼°µ±Ç°½ø³ÌÊÇ·ñÓÐÈ¨ÏÞÏòÄ¿±ê½ø³Ì·¢ËÍÐÅºÅ¡£
+ 	}sigval_t;
+sigqueue()±Èkill()´«µÝÁË¸ü¶àµÄ¸½¼ÓÐÅÏ¢£¬µ«sigqueue()Ö»ÄÜÏò
+Ò»¸ö½ø³Ì·¢ËÍÐÅºÅ£¬¶ø²»ÄÜ·¢ËÍÐÅºÅ¸øÒ»¸ö½ø³Ì×é¡£Èç¹ûsigno=0£¬
+½«»áÖ´ÐÐ´íÎó¼ì²é£¬µ«Êµ¼ÊÉÏ²»·¢ËÍÈÎºÎÐÅºÅ£¬0ÖµÐÅºÅ¿ÉÓÃÓÚ¼ì
+²épidµÄÓÐÐ§ÐÔÒÔ¼°µ±Ç°½ø³ÌÊÇ·ñÓÐÈ¨ÏÞÏòÄ¿±ê½ø³Ì·¢ËÍÐÅºÅ¡£
 
-ÔÚµ÷ÓÃsigqueueÊ±£¬sigval_tÖ¸¶¨µÄÐÅÏ¢»á¿½±´µ½3²ÎÊýÐÅºÅ´¦Àíº¯Êý£¨3²ÎÊýÐÅºÅ´¦Àíº¯ÊýÖ¸µÄÊÇÐÅºÅ´¦Àíº¯ÊýÓÉsigaction°²×°£¬²¢Éè¶¨ÁËsa_sigactionÖ¸Õë£¬ÉÔºó½«²ûÊö£©µÄsiginfo_t½á¹¹ÖÐ£¬ÕâÑùÐÅºÅ´¦Àíº¯Êý¾Í¿ÉÒÔ´¦ÀíÕâÐ©ÐÅÏ¢ÁË¡£ÓÉÓÚsigqueueÏµÍ³µ÷ÓÃÖ§³Ö·¢ËÍ´ø²ÎÊýÐÅºÅ£¬ËùÒÔ±Èkill()ÏµÍ³µ÷ÓÃµÄ¹¦ÄÜÒªÁé»îºÍÇ¿´óµÃ¶à¡£
+ÔÚµ÷ÓÃsigqueueÊ±£¬sigval_tÖ¸¶¨µÄÐÅÏ¢»á¿½±´µ½3²ÎÊýÐÅºÅ´¦Àí
+º¯Êý£¨3²ÎÊýÐÅºÅ´¦Àíº¯ÊýÖ¸µÄÊÇÐÅºÅ´¦Àíº¯ÊýÓÉsigaction°²×°£¬
+²¢Éè¶¨ÁËsa_sigactionÖ¸Õë£¬ÉÔºó½«²ûÊö£©µÄsiginfo_t½á¹¹ÖÐ£¬
+ÕâÑùÐÅºÅ´¦Àíº¯Êý¾Í¿ÉÒÔ´¦ÀíÕâÐ©ÐÅÏ¢ÁË¡£ÓÉÓÚsigqueueÏµÍ³µ÷
+ÓÃÖ§³Ö·¢ËÍ´ø²ÎÊýÐÅºÅ£¬ËùÒÔ±Èkill()ÏµÍ³µ÷ÓÃµÄ¹¦ÄÜÒªÁé»îºÍ
+Ç¿´óµÃ¶à¡£
 
-×¢£ºsigqueue£¨£©·¢ËÍ·ÇÊµÊ±ÐÅºÅÊ±£¬µÚÈý¸ö²ÎÊý°üº¬µÄÐÅÏ¢ÈÔÈ»ÄÜ¹»´«µÝ¸øÐÅºÅ´¦Àíº¯Êý£» sigqueue£¨£©·¢ËÍ·ÇÊµÊ±ÐÅºÅÊ±£¬ÈÔÈ»²»Ö§³ÖÅÅ¶Ó£¬¼´ÔÚÐÅºÅ´¦Àíº¯ÊýÖ´ÐÐ¹ý³ÌÖÐµ½À´µÄËùÓÐÏàÍ¬ÐÅºÅ£¬¶¼±»ºÏ²¢ÎªÒ»¸öÐÅºÅ¡£
+×¢£ºsigqueue£¨£©·¢ËÍ·ÇÊµÊ±ÐÅºÅÊ±£¬µÚÈý¸ö²ÎÊý°üº¬µÄÐÅÏ¢ÈÔ
+È»ÄÜ¹»´«µÝ¸øÐÅºÅ´¦Àíº¯Êý£» sigqueue£¨£©·¢ËÍ·ÇÊµÊ±ÐÅºÅÊ±£¬
+ÈÔÈ»²»Ö§³ÖÅÅ¶Ó£¬¼´ÔÚÐÅºÅ´¦Àíº¯ÊýÖ´ÐÐ¹ý³ÌÖÐµ½À´µÄËùÓÐÏàÍ¬
+ÐÅºÅ£¬¶¼±»ºÏ²¢ÎªÒ»¸öÐÅºÅ¡£
 
 4¡¢alarm£¨£© 
 #include <unistd.h> 
 unsigned int alarm(unsigned int seconds) 
-×¨ÃÅÎªSIGALRMÐÅºÅ¶øÉè£¬ÔÚÖ¸¶¨µÄÊ±¼äsecondsÃëºó£¬½«Ïò½ø³Ì±¾Éí·¢ËÍSIGALRMÐÅºÅ£¬ÓÖ³ÆÎªÄÖÖÓÊ±¼ä¡£½ø³Ìµ÷ÓÃalarmºó£¬ÈÎºÎÒÔÇ°µÄalarm()µ÷ÓÃ¶¼½«ÎÞÐ§¡£Èç¹û²ÎÊýsecondsÎªÁã£¬ÄÇÃ´½ø³ÌÄÚ½«²»ÔÙ°üº¬ÈÎºÎÄÖÖÓÊ±¼ä¡£ 
-·µ»ØÖµ£¬Èç¹ûµ÷ÓÃalarm£¨£©Ç°£¬½ø³ÌÖÐÒÑ¾­ÉèÖÃÁËÄÖÖÓÊ±¼ä£¬Ôò·µ»ØÉÏÒ»¸öÄÖÖÓÊ±¼äµÄÊ£ÓàÊ±¼ä£¬·ñÔò·µ»Ø0¡£ 
+×¨ÃÅÎªSIGALRMÐÅºÅ¶øÉè£¬ÔÚÖ¸¶¨µÄÊ±¼äsecondsÃëºó£¬½«Ïò½ø³Ì
+±¾Éí·¢ËÍSIGALRMÐÅºÅ£¬ÓÖ³ÆÎªÄÖÖÓÊ±¼ä¡£½ø³Ìµ÷ÓÃalarmºó£¬ÈÎ
+ºÎÒÔÇ°µÄalarm()µ÷ÓÃ¶¼½«ÎÞÐ§¡£Èç¹û²ÎÊýsecondsÎªÁã£¬ÄÇÃ´½ø
+³ÌÄÚ½«²»ÔÙ°üº¬ÈÎºÎÄÖÖÓÊ±¼ä¡£ 
+·µ»ØÖµ£¬Èç¹ûµ÷ÓÃalarm£¨£©Ç°£¬½ø³ÌÖÐÒÑ¾­ÉèÖÃÁËÄÖÖÓÊ±¼ä£¬Ôò
+·µ»ØÉÏÒ»¸öÄÖÖÓÊ±¼äµÄÊ£ÓàÊ±¼ä£¬·ñÔò·µ»Ø0¡£ 
 
 5¡¢setitimer£¨£© 
 #include <sys/time.h> 
 int setitimer(int which, const struct itimerval *value, struct itimerval *ovalue)); 
 setitimer()±Èalarm¹¦ÄÜÇ¿´ó£¬Ö§³Ö3ÖÖÀàÐÍµÄ¶¨Ê±Æ÷£º 
 
-ITIMER_REAL£º Éè¶¨¾ø¶ÔÊ±¼ä£»¾­¹ýÖ¸¶¨µÄÊ±¼äºó£¬ÄÚºË½«·¢ËÍSIGALRMÐÅºÅ¸ø±¾½ø³Ì£»
-ITIMER_VIRTUAL Éè¶¨³ÌÐòÖ´ÐÐÊ±¼ä£»¾­¹ýÖ¸¶¨µÄÊ±¼äºó£¬ÄÚºË½«·¢ËÍSIGVTALRMÐÅºÅ¸ø±¾½ø³Ì£»
-ITIMER_PROF Éè¶¨½ø³ÌÖ´ÐÐÒÔ¼°ÄÚºËÒò±¾½ø³Ì¶øÏûºÄµÄÊ±¼äºÍ£¬¾­¹ýÖ¸¶¨µÄÊ±¼äºó£¬ÄÚºË½«·¢ËÍITIMER_VIRTUALÐÅºÅ¸ø±¾½ø³Ì£»
-Setitimer()µÚÒ»¸ö²ÎÊýwhichÖ¸¶¨¶¨Ê±Æ÷ÀàÐÍ£¨ÉÏÃæÈýÖÖÖ®Ò»£©£»µÚ¶þ¸ö²ÎÊýÊÇ½á¹¹itimervalµÄÒ»¸öÊµÀý£¬½á¹¹itimervalÐÎÊ½¼û¸½Â¼1¡£µÚÈý¸ö²ÎÊý¿É²»×ö´¦Àí¡£
+ITIMER_REAL£º Éè¶¨¾ø¶ÔÊ±¼ä£»¾­¹ýÖ¸¶¨µÄÊ±¼äºó£¬ÄÚºË½«·¢ËÍ
+SIGALRMÐÅºÅ¸ø±¾½ø³Ì£»
+ITIMER_VIRTUAL Éè¶¨³ÌÐòÖ´ÐÐÊ±¼ä£»¾­¹ýÖ¸¶¨µÄÊ±¼äºó£¬ÄÚºË½«
+·¢ËÍSIGVTALRMÐÅºÅ¸ø±¾½ø³Ì£»
+ITIMER_PROF Éè¶¨½ø³ÌÖ´ÐÐÒÔ¼°ÄÚºËÒò±¾½ø³Ì¶øÏûºÄµÄÊ±¼äºÍ£¬
+¾­¹ýÖ¸¶¨µÄÊ±¼äºó£¬ÄÚºË½«·¢ËÍITIMER_VIRTUALÐÅºÅ¸ø±¾½ø³Ì£»
+
+Setitimer()µÚÒ»¸ö²ÎÊýwhichÖ¸¶¨¶¨Ê±Æ÷ÀàÐÍ£¨ÉÏÃæÈýÖÖÖ®Ò»£©£»
+µÚ¶þ¸ö²ÎÊýÊÇ½á¹¹itimervalµÄÒ»¸öÊµÀý£¬½á¹¹itimervalÐÎÊ½¼û
+¸½Â¼1¡£µÚÈý¸ö²ÎÊý¿É²»×ö´¦Àí¡£
 
 Setitimer()µ÷ÓÃ³É¹¦·µ»Ø0£¬·ñÔò·µ»Ø-1¡£
 
@@ -479,15 +575,26 @@ Setitimer()µ÷ÓÃ³É¹¦·µ»Ø0£¬·ñÔò·µ»Ø-1¡£
 #include <stdlib.h> 
 void abort(void); 
 
-Ïò½ø³Ì·¢ËÍSIGABORTÐÅºÅ£¬Ä¬ÈÏÇé¿öÏÂ½ø³Ì»áÒì³£ÍË³ö£¬µ±È»¿É¶¨Òå×Ô¼ºµÄÐÅºÅ´¦Àíº¯Êý¡£¼´Ê¹SIGABORT±»½ø³ÌÉèÖÃÎª×èÈûÐÅºÅ£¬µ÷ÓÃabort()ºó£¬SIGABORTÈÔÈ»ÄÜ±»½ø³Ì½ÓÊÕ¡£¸Ãº¯ÊýÎÞ·µ»ØÖµ¡£
+Ïò½ø³Ì·¢ËÍSIGABORTÐÅºÅ£¬Ä¬ÈÏÇé¿öÏÂ½ø³Ì»áÒì³£ÍË³ö£¬µ±È»¿É
+¶¨Òå×Ô¼ºµÄÐÅºÅ´¦Àíº¯Êý¡£¼´Ê¹SIGABORT±»½ø³ÌÉèÖÃÎª×èÈûÐÅºÅ£¬
+µ÷ÓÃabort()ºó£¬SIGABORTÈÔÈ»ÄÜ±»½ø³Ì½ÓÊÕ¡£¸Ãº¯ÊýÎÞ·µ»ØÖµ¡£
 
 
 --------------------------------------------------------------------------------
 »ØÒ³Ê×
 Îå¡¢ÐÅºÅµÄ°²×°£¨ÉèÖÃÐÅºÅ¹ØÁª¶¯×÷£©
-Èç¹û½ø³ÌÒª´¦ÀíÄ³Ò»ÐÅºÅ£¬ÄÇÃ´¾ÍÒªÔÚ½ø³ÌÖÐ°²×°¸ÃÐÅºÅ¡£°²×°ÐÅºÅÖ÷ÒªÓÃÀ´È·¶¨ÐÅºÅÖµ¼°½ø³ÌÕë¶Ô¸ÃÐÅºÅÖµµÄ¶¯×÷Ö®¼äµÄÓ³Éä¹ØÏµ£¬¼´½ø³Ì½«Òª´¦ÀíÄÄ¸öÐÅºÅ£»¸ÃÐÅºÅ±»´«µÝ¸ø½ø³ÌÊ±£¬½«Ö´ÐÐºÎÖÖ²Ù×÷¡£
+Èç¹û½ø³ÌÒª´¦ÀíÄ³Ò»ÐÅºÅ£¬ÄÇÃ´¾ÍÒªÔÚ½ø³ÌÖÐ°²×°¸ÃÐÅºÅ¡£°²×°ÐÅ
+ºÅÖ÷ÒªÓÃÀ´È·¶¨ÐÅºÅÖµ¼°½ø³ÌÕë¶Ô¸ÃÐÅºÅÖµµÄ¶¯×÷Ö®¼äµÄÓ³Éä¹ØÏµ£¬
+¼´½ø³Ì½«Òª´¦ÀíÄÄ¸öÐÅºÅ£»¸ÃÐÅºÅ±»´«µÝ¸ø½ø³ÌÊ±£¬½«Ö´ÐÐºÎÖÖ²Ù×÷¡£
 
-linuxÖ÷ÒªÓÐÁ½¸öº¯ÊýÊµÏÖÐÅºÅµÄ°²×°£ºsignal()¡¢sigaction()¡£ÆäÖÐsignal()ÔÚ¿É¿¿ÐÅºÅÏµÍ³µ÷ÓÃµÄ»ù´¡ÉÏÊµÏÖ, ÊÇ¿âº¯Êý¡£ËüÖ»ÓÐÁ½¸ö²ÎÊý£¬²»Ö§³ÖÐÅºÅ´«µÝÐÅÏ¢£¬Ö÷ÒªÊÇÓÃÓÚÇ°32ÖÖ·ÇÊµÊ±ÐÅºÅµÄ°²×°£»¶øsigaction()ÊÇ½ÏÐÂµÄº¯Êý£¨ÓÉÁ½¸öÏµÍ³µ÷ÓÃÊµÏÖ£ºsys_signalÒÔ¼°sys_rt_sigaction£©£¬ÓÐÈý¸ö²ÎÊý£¬Ö§³ÖÐÅºÅ´«µÝÐÅÏ¢£¬Ö÷ÒªÓÃÀ´Óë sigqueue() ÏµÍ³µ÷ÓÃÅäºÏÊ¹ÓÃ£¬µ±È»£¬sigaction()Í¬ÑùÖ§³Ö·ÇÊµÊ±ÐÅºÅµÄ°²×°¡£sigaction()ÓÅÓÚsignal()Ö÷ÒªÌåÏÖÔÚÖ§³ÖÐÅºÅ´øÓÐ²ÎÊý¡£
+linuxÖ÷ÒªÓÐÁ½¸öº¯ÊýÊµÏÖÐÅºÅµÄ°²×°£ºsignal()¡¢sigaction()¡£
+ÆäÖÐsignal()ÔÚ¿É¿¿ÐÅºÅÏµÍ³µ÷ÓÃµÄ»ù´¡ÉÏÊµÏÖ, ÊÇ¿âº¯Êý¡£ËüÖ»
+ÓÐÁ½¸ö²ÎÊý£¬²»Ö§³ÖÐÅºÅ´«µÝÐÅÏ¢£¬Ö÷ÒªÊÇÓÃÓÚÇ°32ÖÖ·ÇÊµÊ±ÐÅºÅ
+µÄ°²×°£»¶øsigaction()ÊÇ½ÏÐÂµÄº¯Êý£¨ÓÉÁ½¸öÏµÍ³µ÷ÓÃÊµÏÖ£º
+sys_signalÒÔ¼°sys_rt_sigaction£©£¬ÓÐÈý¸ö²ÎÊý£¬Ö§³ÖÐÅºÅ´«µÝ
+ÐÅÏ¢£¬Ö÷ÒªÓÃÀ´Óë sigqueue() ÏµÍ³µ÷ÓÃÅäºÏÊ¹ÓÃ£¬µ±È»£¬
+sigaction()Í¬ÑùÖ§³Ö·ÇÊµÊ±ÐÅºÅµÄ°²×°¡£sigaction()ÓÅÓÚ
+signal()Ö÷ÒªÌåÏÖÔÚÖ§³ÖÐÅºÅ´øÓÐ²ÎÊý¡£
 
 1¡¢signal() 
 #include <signal.h> 
@@ -594,7 +701,9 @@ sigismember(const sigset_t *set, int signum)ÅÐ¶¨ÐÅºÅsignumÊÇ·ñÔÚsetÖ¸ÏòµÄÐÅºÅ¼¯Ö
 --------------------------------------------------------------------------------
 »ØÒ³Ê×
 Æß¡¢ÐÅºÅ×èÈûÓëÐÅºÅÎ´¾ö:
-Ã¿¸ö½ø³Ì¶¼ÓÐÒ»¸öÓÃÀ´ÃèÊöÄÄÐ©ÐÅºÅµÝËÍµ½½ø³ÌÊ±½«±»×èÈûµÄÐÅºÅ¼¯£¬¸ÃÐÅºÅ¼¯ÖÐµÄËùÓÐÐÅºÅÔÚµÝËÍµ½½ø³Ìºó¶¼½«±»×èÈû¡£ÏÂÃæÊÇÓëÐÅºÅ×èÈûÏà¹ØµÄ¼¸¸öº¯Êý£º
+Ã¿¸ö½ø³Ì¶¼ÓÐÒ»¸öÓÃÀ´ÃèÊöÄÄÐ©ÐÅºÅµÝËÍµ½½ø³ÌÊ±½«±»×èÈûµÄÐÅºÅ
+¼¯£¬¸ÃÐÅºÅ¼¯ÖÐµÄËùÓÐÐÅºÅÔÚµÝËÍµ½½ø³Ìºó¶¼½«±»×èÈû¡£ÏÂÃæÊÇÓë
+ÐÅºÅ×èÈûÏà¹ØµÄ¼¸¸öº¯Êý£º
 
 #include <signal.h>
 int  sigprocmask(int  how,  const  sigset_t *set, sigset_t *oldset))£»
